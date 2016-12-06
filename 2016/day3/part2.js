@@ -2,7 +2,6 @@
  * @link http://adventofcode.com/day/3
  */
 const { getInput } = require('./helper');
-const collection = require('lodash/collection');
 const BATCH_NUMBER = 3;
 
 function take(array, startIndex, batch) {
@@ -37,7 +36,7 @@ function read(input, index = 0, triangles = []) {
 }
 
 function getPossibleTriangles(input) {
-  return collection.filter(input, (el) => {
+  return input.filter(el => {
     const [a, b, c] = el;
     return (a + b > c) && (a + c > b) && (b + c > a);
   });
