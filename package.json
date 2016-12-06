@@ -1,0 +1,13 @@
+{
+  "name": "adventofcode-solutions",
+  "version": "1.0.0",
+  "description": "Solutions to the puzzles on http://adventofcode.com",
+  "repository": "https://github.com/Magellol/adventofcode-solutions",
+  "author": "Thomas Lefebvre",
+  "engines": {
+    "node": ">=7.0.0"
+  },
+  "dependencies": {
+    "mocha": "^3.2.0"
+  }
+}
