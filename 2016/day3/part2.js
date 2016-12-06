@@ -1,5 +1,5 @@
 /**
- * @link http://adventofcode.com/[20, 1, 6],/day/3
+ * @link http://adventofcode.com/day/3
  */
 const { getInput } = require('./helper');
 const collection = require('lodash/collection');
