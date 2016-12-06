@@ -1,18 +1,8 @@
 /**
  * @link http://adventofcode.com/2016/day/3
  */
-const fs = require('fs');
 const collection = require('lodash/collection');
-const path = require('path');
-
-const input = fs.readFileSync(path.join(__dirname, 'input'), {
-  encoding: 'utf8'
-})
-.trim()
-.split('\n')
-.map((val, index) => {
-  return val.trim().split('  ').map(value => parseInt(value));
-});
+const { getInput } = require('./helper');
 
 function getPossibleTriangles(input) {
   return collection.filter(input, (el) => {
@@ -21,4 +11,5 @@ function getPossibleTriangles(input) {
   });
 }
 
+const input = getInput();
 module.exports = getPossibleTriangles(input).length;
