@@ -9,7 +9,9 @@ function getInput() {
   .trim()
   .split('\n')
   .map((val, index) => {
-    return val.trim().split('  ').map(value => parseInt(value));
+    return val.trim().split(' ')
+    .filter(value => value !== '')
+    .map(value => parseInt(value));
   });
 }
 
