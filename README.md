@@ -1,0 +1,9 @@
+## Solutions to [http://adventofcode.com/](http://adventofcode.com/)
+Everyone has their own ways to wait for Christmas.
+
+## Disclaimer
+These bits of code are solutions to each of the puzzles on _adventofcode_.
+While there are probably more suited and more elegant ways to solve them, I usually stopped after the first or the second
+iteration of the code and moved on.
+
+I'm going to try to post them each day.
