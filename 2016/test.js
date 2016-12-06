@@ -2,7 +2,7 @@ const assert = require('assert');
 
 function test (day, part, expected) {
   const answer = require(`./day${day}/part${part}`);
-  assert.strictEqual(expected, answer);
+  assert.strictEqual(answer, expected);
 }
 
 describe('Puzzles for 2016', function () {
@@ -18,7 +18,7 @@ describe('Puzzles for 2016', function () {
     test(2, 2, '57DD8');
   });
 
-  it.skip('Day 3 part 1', function () {
-
+  it('Day 3 part 1', function () {
+    test(3, 1, 982);
   });
 });
