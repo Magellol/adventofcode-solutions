@@ -4,6 +4,9 @@
   "description": "Solutions to the puzzles on http://adventofcode.com",
   "repository": "https://github.com/Magellol/adventofcode-solutions",
   "author": "Thomas Lefebvre",
+  "scripts": {
+    "test": "mocha ./2016/test"
+  },
   "engines": {
     "node": ">=7.0.0"
   },

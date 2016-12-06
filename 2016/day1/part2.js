@@ -111,5 +111,5 @@ const inputs = [
 ];
 
 const movedCharacter = move(character, inputs);
-const totalBlocks = getTotalBlocksAway(movedCharacter);
-console.log(totalBlocks); // 110.
+
+module.exports = getTotalBlocksAway(movedCharacter);

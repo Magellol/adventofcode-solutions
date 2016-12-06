@@ -1,77 +1,107 @@
 /**
  * @link http://adventofcode.com/2016/day/2
- * 
+ *
  * Keypad
  * ---------
- * | 1 2 3 |
- * | 4 5 6 |
- * | 7 8 9 |
- * --------
+ *     1
+ *   2 3 4
+ * 5 6 7 8 9
+ *   A B C
+ *     D
+ * ---------
  */
 const STARTER_BUTTON = 5;
 
 const keypad = {
   1: {
     U: null,
-    R: 2,
-    D: 4,
+    R: null,
+    D: 3,
     L: null
   },
 
   2: {
     U: null,
     R: 3,
-    D: 5,
-    L: 1
+    D: 6,
+    L: null
   },
 
   3: {
-    U: null,
-    R: null,
-    D: 6,
+    U: 1,
+    R: 4,
+    D: 7,
     L: 2
   },
 
   4: {
-    U: 1,
-    R: 5,
-    D: 7,
-    L: null
+    U: null,
+    R: null,
+    D: 8,
+    L: 3
   },
 
   5: {
-    U: 2,
+    U: null,
     R: 6,
-    D: 8,
-    L: 4
+    D: null,
+    L: null
   },
 
   6: {
-    U: 3,
-    R: null,
-    D: 9,
+    U: 2,
+    R: 7,
+    D: 'A',
     L: 5
   },
 
   7: {
-    U: 4,
+    U: 3,
     R: 8,
-    D: null,
-    L: null
+    D: 'B',
+    L: 6
   },
 
   8: {
-    U: 5,
+    U: 4,
     R: 9,
-    D: null,
+    D: 'C',
     L: 7
   },
 
   9: {
-    U: 6,
+    U: null,
     R: null,
     D: null,
     L: 8
+  },
+
+  A: {
+    U: 6,
+    R: 'B',
+    D: null,
+    L: null
+  },
+
+  B: {
+    U: 7,
+    R: 'C',
+    D: 'D',
+    L: 'A'
+  },
+
+  C: {
+    U: 8,
+    R: null,
+    D: null,
+    L: 'B'
+  },
+
+  D: {
+    U: 'B',
+    R: null,
+    D: null,
+    L: null
   }
 };
 
@@ -112,5 +142,4 @@ function decrypt(inputs, starterButton, index = 0, code = []) {
   return decrypt(inputs, response, index + 1, updatedCode);
 }
 
-const bathroomCode = decrypt(inputs, STARTER_BUTTON).join('');
-console.log(bathroomCode);
+module.exports = decrypt(inputs, STARTER_BUTTON).join('');
