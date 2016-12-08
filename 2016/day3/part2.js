@@ -4,10 +4,6 @@
 const { getInput } = require('./helper');
 const BATCH_NUMBER = 3;
 
-function take(array, startIndex, batch) {
-  return array.concat([]).splice(startIndex, batch);
-}
-
 function extract(array, column) {
   return array.reduce(function reduce(accumulator, current) {
     accumulator.push(current[column]);
@@ -29,7 +25,7 @@ function read(input, index = 0, triangles = []) {
     return triangles;
   }
 
-  const current = take(input, index, BATCH_NUMBER);
+  const current = input.slice(index, index + BATCH_NUMBER);
   const newTriangles = triangles.concat(buildTriangleArray(current));
 
   return read(input, index + BATCH_NUMBER, newTriangles);

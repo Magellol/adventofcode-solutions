@@ -20,7 +20,7 @@ function validate(name, expectedChecksum) {
     return characters[a] > characters[b] ? -1 : 1;
   });
 
-  const actualChecksum = sorted.concat([]).splice(0, 5);
+  const actualChecksum = sorted.slice(0, 5);
   return actualChecksum.join('') === expectedChecksum;
 }
 
