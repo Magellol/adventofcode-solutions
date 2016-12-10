@@ -1,14 +1,15 @@
 const md5 = require('md5');
 const fs = require('fs');
 const path = require('path');
-const cache = require('./cache1.json');
+const cache = require('./cache2.json');
 
 // I could not use recursive function because
 // the call stack goes way beyond the total allowed range in node...
 function decrypt(roomId, index) {
   const password = [];
+  let found = 0;
 
-  while(password.length < 8) {
+  while(found < 8) {
     const hash = md5(roomId + index);
 
     // Usually in case the cache ins't built up.
@@ -17,7 +18,17 @@ function decrypt(roomId, index) {
       continue;
     }
 
-    password.push(hash[5]);
+    const position = hash[5];
+    const character = hash[6];
+
+    if (isNaN(position) || position >= 8 || password[position]) {
+      index++;
+      continue;
+    }
+
+    password[position] = character;
+    found++;
+
     const cachedIndex = cache.indexOf(index);
     if (cachedIndex !== -1) {
       index = cache[cachedIndex + 1] ? cache[cachedIndex + 1] : index + 1;
@@ -25,7 +36,7 @@ function decrypt(roomId, index) {
     }
 
     cache.push(index);
-    fs.writeFileSync(path.join(__dirname, 'cache1.json'), JSON.stringify(cache));
+    fs.writeFileSync(path.join(__dirname, 'cache2.json'), JSON.stringify(cache));
 
     index++;
   }
