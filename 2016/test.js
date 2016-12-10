@@ -6,7 +6,7 @@ function test (day, part, expected) {
 }
 
 describe('Puzzles for 2016', function () {
-  it('Day 1 part 2', function () {
+  it.only('Day 1 part 2', function () {
     test(1, 2, 110);
   });
 
