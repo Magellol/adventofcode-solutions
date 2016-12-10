@@ -1,7 +1,7 @@
 const md5 = require('md5');
 const fs = require('fs');
 const path = require('path');
-const cache = require('./cache1.json');
+const cache = require('./cache.json');
 
 // I could not use recursive function because
 // the call stack goes way beyond the total allowed range in node...
@@ -25,7 +25,7 @@ function decrypt(roomId, index) {
     }
 
     cache.push(index);
-    fs.writeFileSync(path.join(__dirname, 'cache1.json'), JSON.stringify(cache));
+    fs.writeFileSync(path.join(__dirname, 'cache.json'), JSON.stringify(cache));
 
     index++;
   }
