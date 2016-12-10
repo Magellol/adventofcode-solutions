@@ -14,7 +14,7 @@ function decrypt(roomId, index) {
 
     // Usually in case the cache ins't built up.
     if (hash.substring(0, 5) !== '00000') {
-      index++
+      index++;
       continue;
     }
 
@@ -22,8 +22,8 @@ function decrypt(roomId, index) {
     const character = hash[6];
 
     if (isNaN(position) === false && position < 8 && !password[position]) {
-      password[position] = character;
-      found++;
+      password[position] = character; // Looks at this beautiful mutation mom :)
+      found++; // And this one too!
     }
 
     const cachedIndex = cache.indexOf(index);
