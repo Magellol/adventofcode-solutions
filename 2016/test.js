@@ -38,9 +38,13 @@ describe('Puzzles for 2016', function () {
   // otherwise we go over the 2000ms limit mocha sets.
   it('Day 5 part 1', function () {
     test(5, 1, 'f77a0e6e');
-  })
+  });
 
   it('Day 5 part 2', function () {
     test(5, 2, '999828ec');
-  })
+  });
+
+  it('Day 6 part 1', function () {
+    test(6, 1, 'kjxfwkdh');
+  });
 });
