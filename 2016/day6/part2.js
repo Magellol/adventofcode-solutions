@@ -9,9 +9,12 @@ function getMessage(array, index = 0, message = []) {
     return message.join``;
   }
 
-  const character = getCharacter({row: array[index]});
-  const updatedMessage = message.concat(character);
+  const character = getCharacter({
+    row: array[index],
+    last: true
+  });
 
+  const updatedMessage = message.concat(character);
   return getMessage(array, index + 1, updatedMessage);
 }
 
