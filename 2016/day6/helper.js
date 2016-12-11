@@ -1,56 +1,52 @@
 const fs = require('fs');
 const path = require('path');
-const merge = require('lodash.mergewith');
 
 function getInput() {
   return fs.readFileSync(path.join(__dirname, 'input'), 'utf8').trimRight().split('\n');
 }
 
-function reduce(array) {
-  return array.reduce(function reduce(commonCharacters, string) {
-    const current = string.split``.map(value => [value]);
+function max(obj) {
+  const values = Object.values(obj);
+  return Math.max(...values);
+}
 
-    return merge(commonCharacters, current, function merge(value, source) {
-      const target = value ? value : [];
-      return target.concat(source);
+function min(obj) {
+  const values = Object.values(obj);
+  return Math.min(...values);
+}
+
+function getKey(obj, value) {
+  return Object.keys(obj).find(el => obj[el] === value);
+}
+
+function format(array) {
+  return array.map(value => value.split``);
+}
+
+function rotate(array) {
+  return array.reduce((acc, current) => {
+    current.map((value, index) => {
+      acc[index] = acc[index] ? acc[index].concat([value]) : [value];
     });
+
+    return acc;
   }, []);
 }
 
-function getCharacter({
-  row,
-  index = 0,
-  last = false,
-  characters = {}
-}) {
-  if (row.length === index) {
-    const sorted = Object.keys(characters).sort((a, b) => {
-      if (characters[a] === characters[b]) {
-        return 0;
-      }
-
-      return characters[a] > characters[b] ? -1 : 1;
+function triageCharacters(row) {
+  return row.reduce((characters, current) => {
+    return Object.assign({}, characters, {
+      [current]: characters[current] ? characters[current] + 1: 1
     });
-
-    return last === true ? sorted[sorted.length - 1] : sorted[0];
-  }
-
-  const key = row[index];
-  const value = characters.hasOwnProperty(key) ? characters[key] : 0;
-  const updatedCharacters = Object.assign({}, characters, {
-    [key]: value + 1
-  });
-
-  return getCharacter({
-    row,
-    last,
-    index: index + 1,
-    characters: updatedCharacters
-  });
-}
+  }, {});
+};
 
 module.exports = {
   getInput,
-  getCharacter,
-  reduce
+  max,
+  min,
+  getKey,
+  format,
+  rotate,
+  triageCharacters
 };

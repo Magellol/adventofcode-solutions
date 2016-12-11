@@ -1,22 +1,26 @@
 const {
   getInput,
-  getCharacter,
-  reduce
+  min,
+  getKey,
+  format,
+  rotate,
+  triageCharacters
 } = require('./helper');
 
-function getMessage(array, index = 0, message = []) {
-  if (index === array.length) {
+function getMessage(input, index = 0, message = []) {
+  if (index === input.length) {
     return message.join``;
   }
 
-  const character = getCharacter({
-    row: array[index],
-    last: true
-  });
+  const triaged = triageCharacters(input[index]);
 
-  const updatedMessage = message.concat(character);
-  return getMessage(array, index + 1, updatedMessage);
+  const key = getKey(triaged, min(triaged));
+  const updatedMessage = message.concat(key);
+
+  return getMessage(input, index + 1, updatedMessage);
 }
 
-const input = getInput();
-module.exports = getMessage(reduce(input));
+const formatted = format(getInput());
+const rotated = rotate(formatted);
+
+module.exports = getMessage(rotated);
