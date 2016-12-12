@@ -5,19 +5,14 @@ const { getInput } = require('./helper');
 const BATCH_NUMBER = 3;
 
 function extract(array, column) {
-  return array.reduce(function reduce(accumulator, current) {
-    accumulator.push(current[column]);
-    return accumulator;
+  return array.reduce((acc, current) => {
+    acc.push(current[column]);
+    return acc;
   }, []);
 }
 
-function buildTriangleArray(array, index = 0, triangles = []) {
-  if (index === array.length) {
-    return triangles;
-  }
-
-  const newTriangles = [extract(array, index)];
-  return buildTriangleArray(array, index + 1, triangles.concat(newTriangles));
+function buildTriangleArray(array) {
+  return array.map((value, index) => extract(array, index));
 }
 
 function read(input, index = 0, triangles = []) {
@@ -38,6 +33,5 @@ function getPossibleTriangles(input) {
   });
 }
 
-const input = getInput();
-const triangles = read(input);
+const triangles = read(getInput());
 module.exports = getPossibleTriangles(triangles).length;
