@@ -1,106 +1,76 @@
 /**
  * @link http://adventofcode.com/2016/day/1
  */
-const { getInput } = require('./helper');
-const DIRECTIONS = ['N', 'E', 'S', 'W'];
+const { getInput, range } = require('./helper');
+const merge = require('lodash.mergewith');
+
+const DIRECTIONS = {
+  N: {x: 0, y: 1},
+  E: {x: 1, y: 0},
+  S: {x: 0, y: -1},
+  W: {x: -1, y: 0}
+};
 
 const character = {
   facing: 'N',
-  movementsHistory: [
-    { x: 0, y: 0 }
+  history: [
+    {x: 0, y: 0}
   ]
 };
 
-function turn(to, currentFacingDirection) {
-  const index = DIRECTIONS.indexOf(currentFacingDirection);
+/**
+ * Returns the next facing direction based on the current one.
+ */
+function turn(currentDirection, to) {
+  const directions = Object.keys(DIRECTIONS);
+  const index = directions.indexOf(currentDirection);
 
-  const methods = {
-    R: function turnRight() {
-      if (index === (DIRECTIONS.length - 1)) {
-        return DIRECTIONS[0];
-      }
-
-      return DIRECTIONS[index + 1];
-    },
-
-    L: function turnLeft() {
-      if (index === 0) {
-        return DIRECTIONS[DIRECTIONS.length - 1];
-      }
-
-      return DIRECTIONS[index - 1];
-    }
-  }
-
-  return methods[to]();
+  const nextIndex = to === 'R' ? 1 : directions.length - 1;
+  return directions[(index + nextIndex) % 4];
 }
 
-function getCharacter(character, {facing, movementsHistory}) {
+function getTotalBlocksAway(position) {
+  const {x, y} = position;
+  return Math.abs(x) + Math.abs(y);
+}
+
+function findFirstDuplicatePosition(positions) {
+  const position = positions
+  .map(value => `${value.x}|${value.y}`)
+  .find((el, index, array) => array.lastIndexOf(el) !== index);
+
+  const [x, y] = position.split('|');
+  return {x, y};
+}
+
+/**
+ * Turn to the next direction and move x forward.
+ * Returns an updated character object.
+ */
+function move(input, character) {
+  const [, direction, steps] = input.split(/([R|L])/);
+  const nextDirection = turn(character.facing, direction);
+  const coordinates = DIRECTIONS[nextDirection];
+
+  const history = range(parseInt(steps)).reduce((acc, current) => {
+    const lastMove = Object.assign({}, acc[acc.length - 1]);
+    const move = merge(lastMove, coordinates, (value, source) => value + source);
+
+    acc.push(move);
+    return acc;
+
+  }, [...character.history]);
+
   return Object.assign({}, character, {
-    facing,
-    movementsHistory
+    history,
+    facing: nextDirection,
   });
 }
 
-function entryIsInHistory(location, allPlaces) {
-  for (let i = 0; i < allPlaces.length; i++) {
-    if (location.x === allPlaces[i].x && location.y === allPlaces[i].y) {
-      return true;
-    }
-  }
+const updatedCharacter = getInput().reduce((acc, current) => {
+  return Object.assign({}, acc, move(current, acc));
+}, character);
 
-  return false;
-}
+const firstDuplicatedPosition = findFirstDuplicatePosition(updatedCharacter.history);
 
-function buildHistory(lastMovement, facingDirection) {
-  const axis = ['N', 'S'].indexOf(facingDirection) !== -1 ? 'y' : 'x';
-
-  return Object.assign({}, lastMovement, {
-    [axis]: ['N', 'E'].indexOf(facingDirection) !== -1 ? lastMovement[axis] + 1 : lastMovement[axis] - 1
-  });
-}
-
-function move(character, inputs, index = 0) {
-  if (index === inputs.length) {
-    return character;
-  }
-
-  const current = inputs[index];
-  const direction = current.substring(0, 1);
-  const steps = current.replace(direction, '');
-  const facing = turn(direction, character.facing);
-
-  const history = character.movementsHistory.concat([]);
-  for (let i = 1; i <= steps; i ++) {
-    const lastMove = history[history.length - 1];
-    const entry = buildHistory(lastMove, facing);
-
-    if (entryIsInHistory(entry, history)) {
-      return getCharacter(character, {
-        facing,
-        movementsHistory: history.concat([entry])
-      });
-    }
-
-    history.push(entry);
-  }
-
-  const updatedCharacter = getCharacter(character, {
-    facing,
-    movementsHistory: history
-  });
-
-  return move(updatedCharacter, inputs, index + 1);
-}
-
-function getTotalBlocksAway(character) {
-  const moves = character.movementsHistory;
-  const lastMove = moves[moves.length - 1];
-
-  return Math.abs(lastMove.x) + Math.abs(lastMove.y); // Could be better.
-}
-
-const inputs = getInput();
-const movedCharacter = move(character, inputs);
-
-module.exports = getTotalBlocksAway(movedCharacter);
+module.exports = getTotalBlocksAway(firstDuplicatedPosition);
