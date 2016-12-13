@@ -1,9 +1,10 @@
 const { getInput, compose } = require('./helper');
+
 const getAllAbbas = compose(getAbbasFrom, buildPotentialAbbas);
 
 function buildPotentialAbbas(string) {
   return string.split``.map((value, index, array) => {
-    return [value, array[index + 1], array[index + 2], array[index + 3]];
+    return array.slice(index, index + 4);
   });
 }
 
