@@ -59,4 +59,8 @@ describe('Puzzles for 2016', function () {
   it('Day 7 part 2', function () {
     test(7, 2, 260);
   });
+
+  it('Day 8 part 1', function () {
+    test(8, 1, 128);
+  })
 });
