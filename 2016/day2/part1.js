@@ -102,7 +102,7 @@ function decrypt(inputs, starterButton, index = 0, code = []) {
   const commands = [...inputs[index]];
   const response = press(commands, starterButton);
 
-  const updatedCode = code.concat([response]);
+  const updatedCode = [...code, [response]];
   return decrypt(inputs, response, index + 1, updatedCode);
 }
 

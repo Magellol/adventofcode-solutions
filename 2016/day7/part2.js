@@ -36,7 +36,7 @@ function getValidIps(ips) {
 
     const babs = segments.reduce((acc, current) => {
       const babs = getBabs(current);
-      return acc.concat(babs);
+      return [...acc, ...babs];
     }, []);
 
     return hypernets.some(hypernet => {

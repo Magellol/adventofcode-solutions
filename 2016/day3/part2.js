@@ -21,7 +21,7 @@ function read(input, index = 0, triangles = []) {
   }
 
   const current = input.slice(index, index + BATCH_NUMBER);
-  const newTriangles = triangles.concat(buildTriangleArray(current));
+  const newTriangles = [...triangles, ...buildTriangleArray(current)];
 
   return read(input, index + BATCH_NUMBER, newTriangles);
 }
