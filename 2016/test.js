@@ -62,5 +62,10 @@ describe('Puzzles for 2016', function () {
 
   it('Day 8 part 1', function () {
     test(8, 1, 128);
-  })
+  });
+
+  it.skip('Day 8 part 2', function () {
+    // It's more of a visual perception.
+    // See day8/part2.js
+  });
 });
