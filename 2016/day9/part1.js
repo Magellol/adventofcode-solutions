@@ -1,5 +1,4 @@
-const fs = require('fs');
-const path = require('path');
+const { getInput } = require('./helper');
 
 function count(string) {
   const arr = string.split('');
@@ -9,24 +8,22 @@ function count(string) {
 
   while(i < arr.length) {
     const current = arr[i];
+
     if (['(', ')'].indexOf(current) === -1) {
       length ++;
       i++;
       continue;
     }
 
-    if(current === '(') {
-      const closingIndex = arr.slice(i).indexOf(')');
-      const end = i + closingIndex;
-      const [, number, times] = arr.slice(i + 1, end).join``.match(/([0-9]+)x([0-9]+)/);
+    const closingParenthesisIndex = arr.slice(i).indexOf(')');
+    const endIndex = i + closingParenthesisIndex;
+    const [characterNumber, times] = arr.slice(i + 1, endIndex).join``.split('x').map(val => parseInt(val));
 
-      length += parseInt(number) * parseInt(times);
-      i = end + parseInt(number) + 1;
-    }
+    length += (characterNumber * times);
+    i = endIndex + characterNumber + 1;
   }
 
   return length;
 }
 
-const string = fs.readFileSync(path.join(__dirname, 'input'), 'utf8').replace(/\s/g, '');
-module.exports = count(string);
+module.exports = count(getInput());
