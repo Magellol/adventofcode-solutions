@@ -69,7 +69,7 @@ describe('Puzzles for 2016', function () {
     // See day8/part2.js
   });
 
-  it.only('Day 9 part 1', function () {
+  it('Day 9 part 1', function () {
     test(9, 1, 183269);
   });
 });
