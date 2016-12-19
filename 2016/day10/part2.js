@@ -64,9 +64,11 @@ const {initalValueCommands, botCommands} = getInput();
 const entities = giveInitialChips(initalValueCommands);
 const output = run(botCommands, entities);
 
-module.exports = Object.keys(output)
-  .find(el => {
-    const [a, b] = output[el];
-    return (a === 61 && b === 17) || (a === 17 && b === 61);
-  })
-  .replace('bot:', '');
+module.exports = Object.entries(output)
+.filter(el => (
+  ['output:0', 'output:1', 'output:2'].indexOf(el[0]) !== -1
+))
+.reduce((acc, current) => {
+  const [, value] = current;
+  return acc * value[0];
+}, 1);

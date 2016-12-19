@@ -18,7 +18,8 @@ function getInput() {
       const [cmdName, ...args] = spaced;
 
       if (cmdName === 'value') {
-        const [chipId, , , , botId] = args;
+        const [chipId] = args;
+        const botId = args[args.length -1];
 
         return Object.assign({}, acc, {
           initalValueCommands: [...acc.initalValueCommands, [Number(chipId), botId]]
