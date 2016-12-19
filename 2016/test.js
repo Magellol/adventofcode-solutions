@@ -72,4 +72,16 @@ describe('Puzzles for 2016', function () {
   it('Day 9 part 1', function () {
     test(9, 1, 183269);
   });
+
+  it.skip('Day 9 part 2', function () {
+    // Haven't had the chance to go around this problem, yet.
+  });
+
+  it.only('Day 10, part 1', function () {
+    test(10, 1, '161');
+  });
+
+  it('Day 10 part 2', function() {
+    test(10, 1, 133163);
+  });
 });
