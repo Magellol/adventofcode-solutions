@@ -35,9 +35,10 @@ describe('Puzzles for 2016', function () {
   });
 
   // The cache file is required for day 5
-  // otherwise we go over the 2000ms limit mocha sets.
+  // otherwise we run out of memory.
   it('Day 5 part 1', function () {
-    test(5, 1, 'f77a0e6e');
+    const p = require('./day5/part1');
+    return p.then(password => assert.strictEqual(password, 'f77a0e6e'));
   });
 
   it('Day 5 part 2', function () {
