@@ -4,9 +4,6 @@ const path = require('path');
 
 const CACHE = require('./cache.json');
 
-
-// TODO
-// I've ditched the cache writing but I need to put it back in.
 function decrypt(roomId, index, password = []) {
   return new Promise((resolve, reject) => {
     const hash = md5(roomId + index);
