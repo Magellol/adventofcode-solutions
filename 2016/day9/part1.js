@@ -1,29 +1,24 @@
 const { getInput } = require('./helper');
 
-function count(string) {
-  const arr = string.split('');
-
-  let length = 0;
-  let i = 0;
-
-  while(i < arr.length) {
-    const current = arr[i];
-
-    if (['(', ')'].indexOf(current) === -1) {
-      length ++;
-      i++;
-      continue;
-    }
-
-    const closingParenthesisIndex = arr.slice(i).indexOf(')');
-    const endIndex = i + closingParenthesisIndex;
-    const [characterNumber, times] = arr.slice(i + 1, endIndex).join``.split('x').map(val => parseInt(val));
-
-    length += (characterNumber * times);
-    i = endIndex + characterNumber + 1;
+function count(array, index = 0, length = 0) {
+  if (index >= array.length) {
+    return length;
   }
 
-  return length;
+  const current = array[index];
+  if (['(',')'].indexOf(current) === -1) {
+    return count(array, index + 1, length + 1);
+  }
+
+  const closingParenthesisIndex = array.slice(index).indexOf(')');
+  const endIndex = index + closingParenthesisIndex;
+  const [characterNumber, times] = array.slice(index + 1, endIndex).join``.split('x').map(val => parseInt(val));
+
+  const updatedIndex = (endIndex + characterNumber + 1);
+  const updatedLength = length + (characterNumber * times);
+
+  return count(array, updatedIndex, updatedLength);
 }
 
-module.exports = count(getInput());
+const input = getInput().split``;
+module.exports = count(input);
